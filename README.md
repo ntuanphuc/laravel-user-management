@@ -17,7 +17,13 @@ Publish assets
 ```
 php artisan vendor:publish --provider="Smbplus\UserManagement\UserManagementServiceProvider" --tag="assets"
 ```
-  
+
+
+Optional - if you did not publish spatie-permission config, please run this
+```shell
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+
 Run migrate  
 ```
 php artisan migrate
