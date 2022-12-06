@@ -19,9 +19,14 @@ class User extends Authenticatable
     protected $guard_name = 'web';
 
     protected $fillable = [
-        'name', 
+        'username',
         'email', 
         'is_active', 
         'password'
     ];
+
+    public function getMorphClass()
+    {
+        return "App\\Models\\User";
+    }
 }
