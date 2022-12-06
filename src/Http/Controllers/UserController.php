@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::orderBy('username', 'DESC')->get()->pluck('username');
+        $roles = Role::orderBy('name', 'DESC')->get()->pluck('name');
 
         return view('spum::users.add', ['user' => new User(), 'roles' => $roles]);
     }
@@ -74,7 +74,7 @@ class UserController extends Controller
 
     public function edit(Request $request,User $user)
     {
-        $roles = Role::orderBy('username', 'DESC')->get()->pluck('username');
+        $roles = Role::orderBy('name', 'DESC')->get()->pluck('name');
 
         return view('spum::users.edit', compact('user', 'roles'));
     }
