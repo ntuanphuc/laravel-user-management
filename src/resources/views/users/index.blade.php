@@ -44,6 +44,20 @@
             <div class="card-header pb-0">
               <h6>Users List</h6>
             </div>
+            @if($users->count())
+              <div class="card-body">
+                <p>
+                  Displaying {{(($users->currentPage() - 1) * $users->perPage()) + 1 }}
+                  - {{(($users->currentPage() - 1) * $users->perPage()) + $users->count() }}
+                  of {{ $users->total() }}
+                  records.
+                </p>
+                @if($users->lastPage() > 1)
+                  <p>{{ $users->appends(Request::all())->links('pagination::bootstrap-4') }}
+                  </p>
+                @endif
+              </div>
+            @endif
             <div class="card-body px-0 pt-0 pb-2">
                 
               <div class="table-responsive p-0">
@@ -65,7 +79,7 @@
                         <div class="d-flex px-2 py-1">
                           
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
+                            <h6 class="mb-0 text-sm">{{ $user->username }}</h6>
                             <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
                           </div>
                         </div>
@@ -88,6 +102,12 @@
                       </td>
                     </tr>
                     @endforeach
+                    @if($users->lastPage() > 1)
+                      <tr>
+                        <td colspan="4"
+                            align="center">{{ $users->appends(Request::all())->links('pagination::bootstrap-4') }}</td>
+                      </tr>
+                    @endif
                   </tbody>
                 </table>
                 @else

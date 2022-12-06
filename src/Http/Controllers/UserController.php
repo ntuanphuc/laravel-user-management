@@ -24,11 +24,11 @@ class UserController extends Controller
         if($keyword != ''){
             
             $users = $users->where(function ($query) use ($keyword){
-                $query->where('name', 'like', '%' . $keyword . '%')
+                $query->where('username', 'like', '%' . $keyword . '%')
                       ->orWhere('email', 'like', '%' . $keyword . '%');
             });
         }
-        $users = $users->orderBy('name');
+        $users = $users->orderBy('username');
 
         $users = $users->paginate(config('smbplus_um.items_per_page', 20));
 
@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::orderBy('name', 'DESC')->get()->pluck('name');
+        $roles = Role::orderBy('username', 'DESC')->get()->pluck('username');
 
         return view('spum::users.add', ['user' => new User(), 'roles' => $roles]);
     }
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8'
         ]);
@@ -61,7 +61,7 @@ class UserController extends Controller
 
         
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'is_active' => $request->is_active,
             'password' => Hash::make($password)
@@ -74,7 +74,7 @@ class UserController extends Controller
 
     public function edit(Request $request,User $user)
     {
-        $roles = Role::orderBy('name', 'DESC')->get()->pluck('name');
+        $roles = Role::orderBy('username', 'DESC')->get()->pluck('username');
 
         return view('spum::users.edit', compact('user', 'roles'));
     }
@@ -82,7 +82,7 @@ class UserController extends Controller
     public function update(Request $request,User $user)
     {
         $request->validate([
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|unique:users,email,' . $user->id
         ]);
 
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         }
 
-        $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->is_active = $request->is_active;
 
