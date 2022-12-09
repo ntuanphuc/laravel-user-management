@@ -24,11 +24,11 @@ class UserController extends Controller
         if($keyword != ''){
             
             $users = $users->where(function ($query) use ($keyword){
-                $query->where('username', 'like', '%' . $keyword . '%')
+                $query->where('name', 'like', '%' . $keyword . '%')
                       ->orWhere('email', 'like', '%' . $keyword . '%');
             });
         }
-        $users = $users->orderBy('username');
+        $users = $users->orderBy('name');
 
         $users = $users->paginate(config('smbplus_um.items_per_page', 20));
 
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required',
+            'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8'
         ]);
@@ -61,7 +61,7 @@ class UserController extends Controller
 
         
         $user = User::create([
-            'username' => $request->username,
+            'name' => $request->name,
             'email' => $request->email,
             'is_active' => $request->is_active,
             'password' => Hash::make($password)
@@ -82,7 +82,7 @@ class UserController extends Controller
     public function update(Request $request,User $user)
     {
         $request->validate([
-            'username' => 'required',
+            'name' => 'required',
             'email' => 'required|unique:users,email,' . $user->id
         ]);
 
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         }
 
-        $user->username = $request->username;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->is_active = $request->is_active;
 

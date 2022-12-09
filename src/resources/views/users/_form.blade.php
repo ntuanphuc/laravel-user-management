@@ -28,7 +28,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                   <label for="example-text-input" class="form-control-label">Name *</label>
-                    <input class="form-control" name="username" type="text" value="{{ old('username', $user->username) }}">
+                    <input class="form-control" name="name" type="text" value="{{ old('name', $user->name) }}">
                   </div>
                 </div>
                 
